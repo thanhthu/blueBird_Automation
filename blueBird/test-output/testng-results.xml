@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="3" passed="3">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="31098" started-at="2016-01-19T03:08:31Z" finished-at="2016-01-19T03:09:02Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="31098" started-at="2016-01-19T03:08:31Z" finished-at="2016-01-19T03:09:02Z">
+      <class name="blueBird.BBPages.Tests.LoginTest">
+        <test-method status="PASS" signature="beforeSuite()[pri:0, instance:blueBird.BBPages.Tests.LoginTest@27f674d]" name="beforeSuite" is-config="true" duration-ms="8474" started-at="2016-01-19T10:08:31Z" finished-at="2016-01-19T10:08:40Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeSuite -->
+        <test-method status="PASS" signature="validLoginBBAdmin()[pri:0, instance:blueBird.BBPages.Tests.LoginTest@27f674d]" name="validLoginBBAdmin" duration-ms="19520" started-at="2016-01-19T10:08:40Z" finished-at="2016-01-19T10:08:59Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- validLoginBBAdmin -->
+        <test-method status="PASS" signature="validLoginCorporate()[pri:0, instance:blueBird.BBPages.Tests.LoginTest@27f674d]" name="validLoginCorporate" duration-ms="1756" started-at="2016-01-19T10:08:59Z" finished-at="2016-01-19T10:09:01Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- validLoginCorporate -->
+        <test-method status="PASS" signature="validLoginAgent()[pri:0, instance:blueBird.BBPages.Tests.LoginTest@27f674d]" name="validLoginAgent" duration-ms="1328" started-at="2016-01-19T10:09:01Z" finished-at="2016-01-19T10:09:02Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- validLoginAgent -->
+        <test-method status="PASS" signature="getCurrentTitle()[pri:0, instance:blueBird.BBPages.Tests.LoginTest@27f674d]" name="getCurrentTitle" is-config="true" duration-ms="8" started-at="2016-01-19T10:09:02Z" finished-at="2016-01-19T10:09:02Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getCurrentTitle -->
+      </class> <!-- blueBird.BBPages.Tests.LoginTest -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
