@@ -23,5 +23,17 @@ public class PageBase {
 	public String getCurrentURL() {
 		return webdriver.getCurrentUrl();
 	}
+	
+	public String generatePIN() 
+	  {
+
+	       //generate a 4 digit integer 1000 <10000
+	       int randomPIN = (int)(Math.random()*9000)+1000;
+
+	       //Store integer in a string
+	       return String.valueOf(randomPIN);
+	       
+	       
+	   }
 
 }

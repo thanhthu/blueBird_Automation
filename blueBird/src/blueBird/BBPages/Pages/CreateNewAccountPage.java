@@ -2,6 +2,7 @@ package blueBird.BBPages.Pages;
 
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
@@ -13,35 +14,21 @@ import blueBird.PageObject.Pages.*;
 
 public class CreateNewAccountPage extends PageBase{
 
-	
-	// Create sapID list
-    //private static String []sapIDlist = {"0000000231","0000001372","0000001374","0000006653","0000000865","0000000044","0000008181","0000001524","0000000299","0000000475","0000000491","0000001216"};
-    public String []sapIDlist = {"0000000231","0000000865"};
- // Create a 4 credit limits string
+	// Create a 4 credit limits string
     public String creditLimit4Random;
     public String creditLimit3 = "000";
     // Credit Limit String
     public String creditLimitTotal;
+    // Create a value to handle the length of Strings
+    public int i = 0;
     
+    // Constructor stub
 	public CreateNewAccountPage(WebDriver webdriver) {
 		super(webdriver);
 		// TODO Auto-generated constructor stub
-	}
+	}	
 	
-	public String generatePIN() 
-	  {
-
-	       //generate a 4 digit integer 1000 <10000
-	       int randomPIN = (int)(Math.random()*9000)+1000;
-
-	       //Store integer in a string
-	       return String.valueOf(randomPIN);
-	       
-	       
-	   }
-	
-	// Get Element on the page
-    
+	// Get Element controls on the page   
     // Get Account header
     public WebElement getAccountHeader(){
     	return getWebElement("//div[@id='head-nav']/div/div[2]/ul[1]/li[2]/a");
@@ -50,7 +37,7 @@ public class CreateNewAccountPage extends PageBase{
     public WebElement getAccountButton(){
     	return getWebElement("//a[@href='/accounts/new']");
     }
-    // Get Account ID textbox
+    // Get Account ID text box
     public WebElement getAccountID(){
     	return getWebElement("//input[@id='account_account_code']");
     }
@@ -69,25 +56,25 @@ public class CreateNewAccountPage extends PageBase{
     	return getWebElement("//input[@value='Save']");
     }
     
-    // Build a function to check the creation of the new account
-    
-    public void verifyCreateAccount(){
-    	
+    // Build a function to check the creation of multiple accounts    
+    public void verifyCreateListAccount(String[] listStringAccounts) throws InterruptedException{
+    		
     	// Click on the Account header
         getAccountHeader().click();
         getAccountButton().click();
         // Wait For Page To Load
         webdriver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-        // Enter the value
-        for (int i = 0; i < 2; i++)
+        // Enter the value to text boxes
+        for (i=0;i<listStringAccounts.length;i++)
         {
+        	
         	getAccountID().clear();	
-        	getAccountID().sendKeys(sapIDlist[i]);
-
+        	getAccountID().sendKeys(listStringAccounts[i]);
         	// Wait For Page To Reload
         	webdriver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
             // Generate a 4 random number
-            creditLimit4Random = generatePIN();
+        	PageBase pageBase = new PageBase(webdriver);
+            creditLimit4Random = pageBase.generatePIN();
             // Combine the String
             creditLimitTotal = creditLimit4Random + creditLimit3;
             
@@ -95,31 +82,76 @@ public class CreateNewAccountPage extends PageBase{
             getAccountCreditBudget().sendKeys(creditLimitTotal);
             
             // Wait For Page To Reload
-            webdriver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
+           // webdriver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
+            Thread.sleep(3000);
             getBillingCycle().click();
-            webdriver.manage().timeouts().implicitlyWait(150, TimeUnit.SECONDS);
             getSaveButton().click();
-            webdriver.manage().timeouts().implicitlyWait(150, TimeUnit.SECONDS);
-           
+            Thread.sleep(3000);        
           // Check new URL
           // Assert.assertTrue(driver.getCurrentUrl().contains("http://ecv-uat.bluebirdgroup.com/accounts/"));
              if (getCurrentURL().contains("http://ecv-uat.bluebirdgroup.com:8080/accounts/")){
-            		System.out.println("Account created successfully for "+ sapIDlist[i]);
+            		System.out.println("Account created successfully for "+ listStringAccounts[i]);
             		Assert.assertTrue(getCurrentURL().contains("http://ecv-uat.bluebirdgroup.com:8080/accounts/"));
             		//Click on the Account header again
                     getAccountHeader().click();
                     getAccountButton().click();
-            	    webdriver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
+                    Thread.sleep(3000);
             	} else {
-            		//Assert.assertTrue(driver.getCurrentUrl().contains("http://ecv-uat.bluebirdgroup.com/accounts/"));
             		Assert.assertTrue(getCurrentURL().contains("http://ecv-uat.bluebirdgroup.com:8080/accounts/"));
-            		System.out.println("Account is not created successfully");
-            		webdriver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
+            		System.out.println("Account is not created successfully for "+ listStringAccounts[i]);
+            		Thread.sleep(3000);
             	}                
             
         }
     }
-    }
+
+    // Build a function to check the creation of single account  
+    	public void verifyCreateSingleAccount(String account) throws InterruptedException{
+    	
+    		// Click on the Account header
+    		getAccountHeader().click();
+    		getAccountButton().click();
+    		// Wait For Page To Load
+    		webdriver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+    		// Enter the value to text boxes
+        	getAccountID().clear();	
+        	getAccountID().sendKeys(account);
+        	// Wait For Page To Reload
+        	webdriver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
+            // Generate a 4 random numbers
+        	PageBase pageBase = new PageBase(webdriver);
+            creditLimit4Random = pageBase.generatePIN();
+            // Combine the String
+            creditLimitTotal = creditLimit4Random + creditLimit3;            
+            getAccountCreditBudget().clear();
+            getAccountCreditBudget().sendKeys(creditLimitTotal);
+            
+            // Click on the billing cycle
+            getBillingCycle().click();
+            getSaveButton().click();
+            Thread.sleep(3000);
+            //webdriver.manage().timeouts().implicitlyWait(150, TimeUnit.SECONDS);
+           
+          // Check new URL
+          // Assert.assertTrue(driver.getCurrentUrl().contains("http://ecv-uat.bluebirdgroup.com/accounts/"));
+             if (getCurrentURL().contains("http://ecv-uat.bluebirdgroup.com:8080/accounts/")){
+            		System.out.println("Account created successfully for "+ account);
+            		Assert.assertTrue(getCurrentURL().contains("http://ecv-uat.bluebirdgroup.com:8080/accounts/"));
+            		//Click on the Account header again
+                    getAccountHeader().click();
+                    getAccountButton().click();
+                    Thread.sleep(3000);
+            	} else {
+            		//Assert.assertTrue(driver.getCurrentUrl().contains("http://ecv-uat.bluebirdgroup.com/accounts/"));
+            		Assert.assertTrue(getCurrentURL().contains("http://ecv-uat.bluebirdgroup.com:8080/accounts/"));
+            		System.out.println("Account is not created successfully");
+            		Thread.sleep(3000);
+            	}                
+            
+        }    
+
+	
+}
 
 
     
